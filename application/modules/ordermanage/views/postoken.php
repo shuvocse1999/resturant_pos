@@ -48,13 +48,35 @@
 
 			<?php foreach ($unique_arr as  $value) { ?>
 
+				<?php echo $value; ?>
+
 				<?php 
-				
+				$order = $this->db->select('*')
+				->from('order_menu')
+				->where('order_id',$orderid)
+				->get()
+				->result();
 				?>
 				<table>
-					<tr>
-						<td><?php  echo $value ?></td>
-					</tr>
+					<?php foreach ($order as  $orders) { ?>
+
+						<?php
+						$food = $this->db->select('*')
+						->from('item_foods')
+						->where('ProductsID',$orders->menu_id)
+						->where('kitchenid',$value)
+						->get()
+						->result();
+						?>
+
+						<?php foreach ($food as  $f) { ?>
+						<tr>
+							<td><?php  echo $f->ProductName ?></td>
+						</tr>
+
+					<?php } ?>
+
+					<?php } ?>
 
 				</table>
 			<?php }?>
