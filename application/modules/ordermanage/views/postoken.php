@@ -27,6 +27,38 @@
 	<div id="printableArea" class="print_area">
 		<div class="panel-body">
 
+			<?php $orderid = $orderinfo->order_id;?>
+			$new_arr = [];
+
+			<?php $varientinfo=$this->db->select("*")->from('order_menu')->where('order_id',$orderid)->get()->result();
+			foreach ($varientinfo as $key => $value) {
+				$query = $this->db->select("*")->from('item_foods')->where('ProductsID', $value->menu_id)->group_by('kitchenid')->get();
+				$result = $query->row();
+
+				$new_arr[] = $result->kitchenid;
+
+
+			}
+			$unique_arr = array_unique($new_arr);
+			// echo "<pre>";
+			// print_r($unique_arr);
+
+
+			?>
+
+			<?php foreach ($unique_arr as  $value) { ?>
+
+				<?php 
+				
+				?>
+				<table>
+					<tr>
+						<td><?php  echo $value ?></td>
+					</tr>
+
+				</table>
+			<?php }?>
+
 
 			<div class="table-responsive m-b-20">
 				<table border="0" class="font-18 wpr_100" style="font-size:18px;">
