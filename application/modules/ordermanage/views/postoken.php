@@ -13,7 +13,6 @@
 		else{
 			var returnurl="<?php echo base_url('ordermanage/order/pos_invoice'); ?>?tokenorder=<?php echo $orderinfo->order_id;?>"; 
 		}
-		window.print();
 		setInterval(function(){
 			document.location.href = returnurl;
 		}, 3000);
@@ -28,7 +27,7 @@
 		<div class="panel-body">
 
 			<?php $orderid = $orderinfo->order_id;?>
-			$new_arr = [];
+
 
 			<?php $varientinfo=$this->db->select("*")->from('order_menu')->where('order_id',$orderid)->get()->result();
 			foreach ($varientinfo as $key => $value) {
@@ -46,180 +45,74 @@
 
 			?>
 
+
+
 			<?php foreach ($unique_arr as  $value) { ?>
 
-				<?php echo $value; ?>
+				<?php  $k=$this->db->select("*")->from('tbl_kitchen')->where('kitchenid',$value)->get()->row(); ?>
 
-				<?php 
-				$order = $this->db->select('*')
-				->from('order_menu')
-				->where('order_id',$orderid)
-				->get()
-				->result();
-				?>
-				<table>
-					<?php foreach ($order as  $orders) { ?>
+				<table border="0" class="wpr_100" style="">
 
-						<?php
-						$food = $this->db->select('*')
-						->from('item_foods')
-						->where('ProductsID',$orders->menu_id)
-						->where('kitchenid',$value)
-						->get()
-						->result();
-						?>
+					<tr>
+						<td align="center"><nobr><date><?php echo display('token_no')?>:<?php echo $orderinfo->tokenno;?></nobr><br/><?php echo $customerinfo->customer_name;?></td>
+						</tr>
+						<h3><?php echo $k->kitchen_name; ?></h3>
+					</table>
 
-						<?php foreach ($food as  $f) { ?>
-						<tr>
-							<td><?php  echo $f->ProductName ?></td>
+					<table border="0" class="wpr_100" style="width: 100%;">
+						<tr class="text-left">
+							<td>Q</td>
+							<td>Item</td>
+							<td class="text-right">Size</td>
+						</tr>
+					</table>
+
+					<?php 
+					$order = $this->db->select('*')
+					->from('order_menu')
+					->where('order_id',$orderid)
+					->get()
+					->result();
+					?>
+					<table border="0" class="wpr_100" style="width: 100%;">
+						<?php foreach ($order as  $orders) { ?>
+
+							<?php
+							$food = $this->db->select('*')
+							->from('item_foods')
+							->where('ProductsID',$orders->menu_id)
+							->where('kitchenid',$value)
+							->get()
+							->result();
+							?>
+
+							<?php  $variant = $this->db->select('*')->from('variant')->where('variantid',$orders->varientid)->get()->row(); ?>
+
+							<?php foreach ($food as  $f) { ?>
+								<tr>
+									<td><?php  echo $orders->menuqty ?></td>
+									<td><?php  echo $f->ProductName ?></td>
+									<td class="text-right"><?php  echo $variant->variantName ?></td>
+								</tr>
+
+							<?php } ?>
+
+						<?php } ?>
+
+						
+
+						<tr style="margin-top: 30px;">
+							<td colspan="3" align="center"><?php if(!empty($tableinfo)){ echo display('table').': '.$tableinfo->tablename;}?> | <?php echo display('ord_number');?>:<?php echo $orderinfo->order_id;?></td>
 						</tr>
 
-					<?php } ?>
-
-					<?php } ?>
-
-				</table>
-			<?php }?>
+					</table>
 
 
-			<div class="table-responsive m-b-20">
-				<table border="0" class="font-18 wpr_100" style="font-size:18px;">
-					<tr>
-						<td>
+					<script type="text/javascript">
+						window.print();
+					</script>
 
-							<table border="0" class="wpr_100" style="">
-								
-								<tr>
-									<td align="center"><nobr><date><?php echo display('token_no')?>:<?php echo $orderinfo->tokenno;?></nobr><br/><?php echo $customerinfo->customer_name;?></td>
-									</tr>
-								</table>
-								<table width="100%">
-									<tr>
-										<td>Q</th>
-											<td><?php echo display('item')?></td>
-											<td><?php echo display('size')?></td>
-										</tr>
-										<?php $i=0; 
-										$totalamount=0;
-										$subtotal=0;
-										$total=$orderinfo->totalamount;
-
-										
-										
-										foreach ($iteminfo as $item){
-											$i++;
-											$itemprice= $item->price*$item->menuqty;
-											$discount=0;
-											$adonsprice=0;
-											$newitem=$this->order_model->read('*','order_menu', array('row_id' =>$item->row_id,'isupdate'=>1));
-											$isexitsitem=$this->order_model->readupdate('tbl_updateitems.*,SUM(tbl_updateitems.qty) as totalqty', 'tbl_updateitems', array('ordid' =>$item->order_id,'menuid'=>$item->menu_id,'varientid'=>$item->varientid,'addonsuid'=>$item->addonsuid));
-											if(!empty($item->add_on_id)){
-												$addons=explode(",",$item->add_on_id);
-												$addonsqty=explode(",",$item->addonsqty);
-												$x=0;
-												foreach($addons as $addonsid){
-													$adonsinfo=$this->order_model->read('*', 'add_ons', array('add_on_id' => $addonsid));
-													$adonsprice=$adonsprice+$adonsinfo->price*$addonsqty[$x];
-													$x++;
-												}
-												$nittotal=$adonsprice;
-												$itemprice=$itemprice;
-											}
-											else{
-												$nittotal=0;
-												$text='';
-											}
-											$totalamount=$totalamount+$nittotal;
-											$subtotal=$subtotal+$item->price*$item->menuqty;
-											if($newitem->menu_id==$isexitsitem->menuid && $newitem->isupdate==1){
-												
-												?>
-												<tr>
-													<td align="left"><?php echo $item->menuqty;?></td>
-													<td align="left"><?php echo $item->ProductName;?><br><?php echo $item->notes;?></td>
-													<td align="left"><?php echo $item->variantName;?></td>
-												</tr>
-												<?php 
-												if(!empty($item->add_on_id)){
-													$y=0;
-													foreach($addons as $addonsid){
-														$adonsinfo=$this->order_model->read('*', 'add_ons', array('add_on_id' => $addonsid));
-														$adonsprice=$adonsprice+$adonsinfo->price*$addonsqty[$y];?>
-														<tr>
-															<td colspan="2">
-																<?php echo $adonsinfo->add_on_name;?>
-															</td>
-															<td class="text-right"><?php echo $addonsqty[$y];?></td>
-														</tr>
-														<?php $y++;
-													}
-												}
-											}else{?>
-												<tr>
-													<td align="left"><?php echo $item->menuqty;?></td>
-													<td align="left"><?php echo $item->ProductName;?><br><?php echo $item->notes;?></td>
-													<td align="left"><?php echo $item->variantName;?></td>
-												</tr>
-												<?php 
-												if(!empty($item->add_on_id)){
-													$y=0;
-													foreach($addons as $addonsid){
-														$adonsinfo=$this->order_model->read('*', 'add_ons', array('add_on_id' => $addonsid));
-														$adonsprice=$adonsprice+$adonsinfo->price*$addonsqty[$y];?>
-														<tr>
-															<td colspan="2">
-																<?php echo $adonsinfo->add_on_name;?>
-															</td>
-															<td class="text-right"><?php echo $addonsqty[$y];?></td>
-														</tr>
-														<?php $y++;
-													}
-												}
-											}
-										}
-										$itemtotal=$totalamount+$subtotal;
-										$calvat=$itemtotal*15/100;
-										
-										$servicecharge=0; 
-										if(empty($billinfo)){ $servicecharge;} 
-										else{$servicecharge=$billinfo->service_charge;}
-										?>
-										<?php 
-										foreach ($exitsitem as $exititem){
-											$newitem=$this->order_model->read('*','order_menu', array('row_id' =>$exititem->row_id,'isupdate'=>1));
-
-											$isexitsitem=$this->order_model->readupdate('tbl_updateitems.*,SUM(tbl_updateitems.qty) as totalqty', 'tbl_updateitems', array('ordid' =>$orderinfo->order_id,'menuid'=>$exititem->menu_id,'varientid'=>$exititem->varientid,'addonsuid'=>$exititem->addonsuid));
-											if(!empty($isexitsitem)){
-												if($isexitsitem->qty>0){
-													$itemprice= $exititem->price*$isexitsitem->qty;
-													if($newitem->isupdate==1){ echo "";}
-													else{
-														?>
-														<tr>
-															<td align="left"><?php echo $isexitsitem->isupdate;?> <?php echo $isexitsitem->totalqty;?></td>
-															<td align="left"><?php echo $exititem->ProductName;?><br><?php echo $exititem->notes;?></td>
-															<td align="left"><?php echo $exititem->variantName;?></td>
-														</tr>
-														<?php 
-													}
-												} }
-												else{}
-											}
-										?>
-										<tr>
-											<td colspan="5" class="border-top-gray"><nobr></nobr></td>
-										</tr>  
-									</table>
-								</td>
-							</tr>
-							<tr>
-								<td align="center"><?php if(!empty($tableinfo)){ echo display('table').': '.$tableinfo->tablename;}?> | <?php echo display('ord_number');?>:<?php echo $orderinfo->order_id;?></td>
-							</tr>
-
-
-
-						</table>
-					</div>
+				<?php }?>
 
 
 
@@ -231,10 +124,7 @@
 
 
 
-
-
-					
-				</div>
 			</div>
-		</body>
-		</html>
+		</div>
+	</body>
+	</html>
