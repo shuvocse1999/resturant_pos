@@ -927,7 +927,12 @@ $(document).on("keypress", '#itemqty_1', function(e){
                               },
                               function(isConfirm) {
                                   if (isConfirm) {
-                                      printRawHtml(data);
+                                     // printRawHtml(data);
+
+                                     $("#printnow").html(data);
+
+                                     // console.log(data);
+
                                   } else {
                                       $('#waiter').select2('data', null);
                                       $('#tableid').select2('data', null);

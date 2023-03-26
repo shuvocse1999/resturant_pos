@@ -23,33 +23,33 @@
 </head>
 
 <body>
-	<div id="printableArea" class="print_area">
-		<div class="panel-body">
-
-			<?php $orderid = $orderinfo->order_id;?>
 
 
-			<?php $varientinfo=$this->db->select("*")->from('order_menu')->where('order_id',$orderid)->get()->result();
-			foreach ($varientinfo as $key => $value) {
-				$query = $this->db->select("*")->from('item_foods')->where('ProductsID', $value->menu_id)->group_by('kitchenid')->get();
-				$result = $query->row();
-
-				$new_arr[] = $result->kitchenid;
+	<?php $orderid = $orderinfo->order_id;?>
 
 
-			}
-			$unique_arr = array_unique($new_arr);
+	<?php $varientinfo=$this->db->select("*")->from('order_menu')->where('order_id',$orderid)->get()->result();
+	foreach ($varientinfo as $key => $value) {
+		$query = $this->db->select("*")->from('item_foods')->where('ProductsID', $value->menu_id)->group_by('kitchenid')->get();
+		$result = $query->row();
+
+		$new_arr[] = $result->kitchenid;
+
+	}
+	$unique_arr = array_unique($new_arr);
 			// echo "<pre>";
 			// print_r($unique_arr);
 
 
-			?>
+	?>
 
 
+	<?php $i = 1; foreach ($unique_arr as $key=>$value) { ?>
+		<?php  $k=$this->db->select("*")->from('tbl_kitchen')->where('kitchenid',$value)->get()->row(); ?>
 
-			<?php foreach ($unique_arr as  $value) { ?>
-
-				<?php  $k=$this->db->select("*")->from('tbl_kitchen')->where('kitchenid',$value)->get()->row(); ?>
+		<div>
+			<div class="panel-body">
+				
 
 				<table border="0" class="wpr_100" style="">
 
@@ -108,23 +108,23 @@
 					</table>
 
 
-					<script type="text/javascript">
-						window.print();
-					</script>
 
-				<?php }?>
+				</div>
+		
 
-
-
-
+			<script type="text/javascript">
+				window.print();
+			</script>
 
 
 
+		<?php }?>
 
 
 
 
-			</div>
-		</div>
+
+
+
 	</body>
 	</html>

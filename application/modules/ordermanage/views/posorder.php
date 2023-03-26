@@ -1,3 +1,5 @@
+<div class="noPrint">
+
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('application/modules/ordermanage/assets/css/posordernew.css'); ?>">
 <script src="<?php echo base_url();?>assets/js/jquery.validate.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url('application/modules/ordermanage/assets/js/postop.js'); ?>" type="text/javascript"></script>
@@ -1218,4 +1220,22 @@ $ptdiscount=0;?>
   </div>
 </form>
 
+</div>
 
+
+
+<div id="printnow">
+
+</div>
+
+
+
+
+<style type="text/css">
+  @media print {
+    .noPrint{
+      display:none;
+    }
+
+  }
+</style>
