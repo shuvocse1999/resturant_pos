@@ -130,6 +130,9 @@
 				newWindow.print();
 
 
+				// window.print();
+
+
 			</script>
 
 
