@@ -1224,18 +1224,18 @@ $ptdiscount=0;?>
 
 
 
+
 <div id="printnow">
+  
 
 </div>
 
 
 
-
 <style type="text/css">
-  @media print {
+  @media print{
     .noPrint{
-      display:none;
+      display: none;
     }
-
   }
 </style>
