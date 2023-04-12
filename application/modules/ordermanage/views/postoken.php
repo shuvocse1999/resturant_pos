@@ -47,7 +47,7 @@
 	<?php $i = 0; foreach ($unique_arr as $key=>$value) { ?>
 		<?php  $k=$this->db->select("*")->from('tbl_kitchen')->where('kitchenid',$value)->get()->row(); ?>
 
-		<div id="area-<?=$key?>">
+		<div id="area">
 			<div class="panel-body">
 				
 
@@ -116,30 +116,22 @@
 
 			</div>
 
-
-
-
 			<script type="text/javascript">
-
-
-				var area = "<?php echo $key; ?>";
-
-				var divToPrint = document.getElementById("area-"+area);
-				var newWindow = window.open('', '', 'height=500,width=500');
-				newWindow.document.write(divToPrint.innerHTML);
-				newWindow.print();
-
-
-				// window.print();
-
-
+				window.print();
 			</script>
 
 
+			<style type="text/css">
+				#area{
+					display: block !important;
+					page-break-after: always;
+				
+				}
+			</style>
+
+
+
 		<?php }?>
-
-
-
 
 
 
