@@ -75,3 +75,60 @@
 <!-- jQuery -->
 <script src="<?php echo base_url('assets/js/jquery-1.12.4.min.js') ?>" type="text/javascript"></script>
 
+
+<style type="text/css">
+    .home-panel-bd {
+      background: #5B6D5B!important;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1)!important;
+
+  }
+  
+  .nav-tabs > li > a.torder{
+    background: #263A29;
+  }
+
+  .nav-tabs > li > a.ongord{
+    background: #263A29;
+  }
+
+  .nav-tabs > li > a.comorder{
+     background: #263A29;
+  }
+
+  .nav-tabs > li > a.home{
+    background: #263A29;
+  }
+
+  .cusbtn{
+    border-radius: 30px;
+    font-size: 15px;
+  }
+
+  .nav-tabs > li.active > a, .nav-tabs > li.active{
+    background: #fff;
+  }
+
+  .ml-l {
+    margin-left: .0rem !important;
+}
+
+.main-sidebar{
+  padding-top: 0px;
+}
+
+.panel-bd>.panel-heading{
+ background: #5B6D5B!important;
+ color: #f1f1f1;
+}
+
+.statistic-box h2{
+  font-size: 30px;
+  background: #41644A;
+  border-radius: 30px;
+
+}
+
+.badge{
+ background: #41644A;
+}
+</style>
