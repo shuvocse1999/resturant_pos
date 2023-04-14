@@ -82,80 +82,8 @@
                 <!-- Content Header (Page header) -->
                 <?php if(($title!='posinvoiceloading') && ($title!='Counter Dashboard')){?>
                 <section class="content-header">
-                    <div class="header-icon"><i class="pe-7s-home"></i></div>
-                    <div class="header-title">
-                        <h1><?php if($this->uri->segment(2)=="paymentmethod"){
-									$titlename="Payment Method";
-								}
-								else if($this->uri->segment(2)=="shippingmethod"){
-									$titlename="Shipping Method";
-									}
-							   else if($this->uri->segment(2)=="supplierlist"){
-									$titlename="Supplier List";
-									}
-								else if($this->uri->segment(2)=="restauranttable"){
-									$titlename="Restaurant Table";
-									}
-								else if($this->uri->segment(2)=="customertype"){
-									$titlename="Customer Type";
-									}
-								else if($this->uri->segment(2)=="unitmeasurement"){
-									$titlename="Unit Measurement";
-									}
-								else if($this->uri->segment(2)=="couponlist"){
-									$titlename="Coupon List";
-									}
-								else if($this->uri->segment(2)=="smsetting"){
-									$titlename="Sms Setting";
-									}
-								else if($this->uri->segment(2)=="smsetting"){
-									$titlename="Sms Setting";
-									}
-								else if($this->uri->segment(2)=="shiftmangmentback"){
-									$titlename="Shift Module";
-									}
-								else if($this->uri->segment(2)=="Wastetracking"){
-									$titlename="Waste tracking";
-									}
-								else if($this->uri->segment(2)=="Cexpense"){
-									$titlename="Expense";
-									}
-								else if($this->uri->segment(2)=="kitchensetting"){
-									$titlename="kitchen Setting";
-									}
-								else if($this->uri->segment(2)=="qrmodule"){
-									$titlename="QR module";
-									}
-								else if($this->uri->segment(2)=="facebookloginback"){
-									$titlename="Facebook Login";
-									}
-								else if($this->uri->segment(2)=="customerlist"){
-									$titlename="Customer List";
-									}
-								else if($this->uri->segment(2)=="ingradient"){
-									$titlename="Ingredients";
-									}
-								else if($this->uri->segment(2)=="serversetting"){
-									$titlename="Server Setting";
-									}		
-								else if($this->uri->segment(2)=="Commissionsetting"){
-									$titlename="Commission Setting";
-									}	
-								else if($this->uri->segment(2)=="thirdpratycustomer"){
-									$titlename="Third-Party Customers";
-									}
-								else if($this->uri->segment(2)=="country_city_list"){
-									$titlename="Country List";
-									}
-								else{
-									$titlename=str_replace("_", " ", $this->uri->segment(2));
-							}
-						
-
-						//Paymentmethod
-						 ?> <!--/--> <?php echo (!empty($titlename)?ucwords($titlename):null) ?></h1>
-                        <small><?php echo (!empty($title)?$title:null) ?></small>
-                    </div>
+                  <!--   <div class="header-icon"><i class="pe-7s-home"></i></div> -->
+                   
                 </section>
 				<?php } ?>
 

@@ -1238,4 +1238,27 @@ $ptdiscount=0;?>
       display: none;
     }
   }
+
+
+  .listcatnew {
+    color: #fff;
+    background: #41644A!important;
+    cursor: pointer;
+    padding: 5px;
+    margin-bottom: 5px;
+    text-align: center;
+    border: 0px;
+    box-shadow: 0 2px 6px 0 rgba(55, 160, 0, .5);
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.product-panel{
+  border: 1px solid #e1e1e1;
+  border-radius: 0px;
+}
+
+.main-sidebar{
+  background-color: #263A29!important;
+}
 </style>
